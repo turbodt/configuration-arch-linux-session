@@ -9,14 +9,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+export ZSH=$HOME/.oh-my-zsh/
 
 export DEFAULT_USER=`whoami`
-export TERM="xterm-256color"
-export ZSH=/usr/share/oh-my-zsh
-export ZSH_POWER_LEVEL_THEME=/usr/share/zsh-theme-powerlevel10k
-
-source $ZSH_POWER_LEVEL_THEME/powerlevel10k.zsh-theme
+#export TERM="tmux-256color"
+export ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(archlinux
 	bundler
@@ -38,8 +35,6 @@ plugins=(archlinux
 )
 # /!\ zsh-syntax-highlighting and then zsh-autosuggestions must be at the end
 
-source $ZSH/oh-my-zsh.sh
-
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
@@ -51,10 +46,17 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte-2.91.sh
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# opencode
+export PATH=/home/daniel/.opencode/bin:$PATH

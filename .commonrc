@@ -2,12 +2,6 @@
 
 alias ll='ls -la'
 
-# tilix workarround. Source: https://gnunn1.github.io/tilix-web/manual/vteconfig/
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-  source /etc/profile.d/vte.sh
-fi
-
-
 # auto start ssh-agent
 eval `ssh-agent -s`
 
@@ -21,8 +15,22 @@ fi
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # android development
-export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export ANDROID_SDK_ROOT=/usr/lib/android-sdk
 export ANDROID_PLATFORM_TOOLS=$ANDROID_SDK_ROOT/platform-tools
 export ANDROID_TOOLS=$ANDROID_SDK_ROOT/tools
 export ANDROID_CMD_LINE_TOOLS=$ANDROID_SDK_ROOT/cmdline-tools
 export PATH="$PATH:$ANDROID_PLATFORM_TOOLS:$ANDROID_TOOLS/bin:$ANDROID_CMD_LINE_TOOLS/latest/bin"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte-2.91.sh
+fi

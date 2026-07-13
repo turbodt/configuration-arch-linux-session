@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -9,7 +9,7 @@ cvt 1280 720
 # add new mode
 xrandr --newmode "1280x720_60.00" 74.50  1280 1344 1472 1664  720 723 728 748 -hsync +vsync
 # assign new mode
-xrandr --addmode eDP1 "1280x720_60.00"
+xrandr --addmode eDP-1 "1280x720_60.00"
 
 # get info about monitors
 function check_monitor () {
@@ -23,31 +23,31 @@ if check_monitor $monitor1 && check_monitor $monitor2  ; then
 
   xrandr --output DP1-1 --primary --mode 1920x1080 --rotate normal \
     --output DP1-2 --mode 1920x1080 --rotate normal --pos -1920x0 \
-    --output eDP1 --mode 1280x720_60.00 --rotate normal --pos 1920x360
+    --output eDP-1 --mode 1280x720_60.00 --rotate normal --pos 1920x360
 
   bspc monitor DP1-1 -d III IV V VI VII VIII IX
   bspc monitor DP1-2 -d I II
-  bspc monitor eDP1 -d X
+  bspc monitor eDP-1 -d X
 
 elif check_monitor $monitor1 && ! check_monitor $monitor2  ; then
 
   xrandr --output DP1-1 --primary --mode 1920x1080 --rotate normal --pos 1280x0 \
     --output eDP1 --mode 1280x720_60.00 --rotate normal --pos 0x360
 
-  bspc monitor eDP1 -d I II
+  bspc monitor eDP-1 -d I II
   bspc monitor DP1-1 -d III IV V VI VII VIII IX X
 
 elif ! check_monitor $monitor1 && check_monitor $monitor2  ; then
 
   xrandr --output DP1-2 --primary --mode 1920x1080 --rotate normal --pos 1280x0 \
-    --output eDP1 --mode 1280x720_60.00 --rotate normal --pos 0x360
+    --output eDP-1 --mode 1280x720_60.00 --rotate normal --pos 0x360
 
-  bspc monitor eDP1 -d I II
+  bspc monitor eDP-1 -d I II
   bspc monitor DP1-2 -d III IV V VI VII VIII IX X
 
 else
-  xrandr --output eDP1 --primary --mode "1280x720_60.00" --rotate normal
-  bspc monitor eDP1 -d I II III IV V VI VII VIII IX X
+  xrandr --output eDP-1 --primary --mode "1600x900" --rotate normal
+  bspc monitor eDP-1 -d I II III IV V VI VII VIII IX X
 fi
 
 

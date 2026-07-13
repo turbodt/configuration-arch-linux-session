@@ -9,8 +9,8 @@ t="  "
 
 printf "Creating symlinks:\n"
 
-for file in ${files[@]};
-do;
+for file in ${files[@]}
+do
   file_path="$current_dir/$file"
   target_path="$home_dir/$file"
 
@@ -46,4 +46,4 @@ do;
     printf "${t}${t}Created symlink '$file_path' -> '$target_path'."
   fi
   printf "\n"
-done;
+done

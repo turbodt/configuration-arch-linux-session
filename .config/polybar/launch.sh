@@ -8,7 +8,7 @@ killall -q polybar
 
 # get info about monitors
 function check_monitor () {
-  xrandr --query | egrep -q "$1 connected"
+  xrandr --query | grep -qE "$1 connected"
 }
 
 monitor1="DP1-1"
