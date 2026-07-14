@@ -6,7 +6,7 @@ alias ll='ls -la'
 eval `ssh-agent -s`
 
 # auto startX at logging
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] && command -v startx >/dev/null 2>&1; then
   exec startx
 fi
 
