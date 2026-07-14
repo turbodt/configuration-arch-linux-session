@@ -1,0 +1,21 @@
+{
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+
+    "modules-right": [
+        "sway/language",
+        "pulseaudio",
+        "battery",
+        "network",
+        "clock"
+    ],
+
+
+    "sway/language": {
+        "format": "{shortDescription} ({variant})",
+        "tooltip-format": "{long}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    }
+}
