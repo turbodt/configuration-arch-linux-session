@@ -5,6 +5,7 @@
     ],
 
     "modules-right": [
+        "custom/dropbox",
         "sway/language",
         "pulseaudio",
         "battery",
@@ -12,6 +13,14 @@
         "clock"
     ],
 
+    "custom/dropbox": {
+        "exec": "~/.config/waybar/scripts/dropbox-status",
+        "return-type": "json",
+        "interval": 10,
+        "tooltip": true,
+        "on-click": "foot -e dropbox-cli status",
+        "on-click-right": "xdg-open https://www.dropbox.com/home"
+    },
 
     "sway/language": {
         "format": "{shortDescription} ({variant})",

@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+
+import json
+import subprocess
+
+try:
+    result = subprocess.run(
+        ["dropbox-cli", "status"],
+        capture_output=True,
+        text=True,
+        timeout=8,
+        check=False,
+    )
+
+    status = (result.stdout or result.stderr).strip()
+
+    if not status:
+        status = "Dropbox no està executant-se"
+
+    normalized = status.lower()
+
+    if result.returncode != 0 or any(
+        word in normalized
+        for word in ("not running", "isn't running", "no està executant")
+    ):
+        output = {
+            "text": "󰅖",
+            "tooltip": status,
+            "class": "stopped",
+        }
+    elif any(
+        word in normalized
+        for word in ("syncing", "indexing", "connecting", "sincronitz")
+    ):
+        output = {
+            "text": "󰑓",
+            "tooltip": status,
+            "class": "syncing",
+        }
+    elif any(
+        word in normalized
+        for word in ("up to date", "actualitzat", "actualizado")
+    ):
+        output = {
+            "text": "󰇣",
+            "tooltip": status,
+            "class": "synced",
+        }
+    else:
+        output = {
+            "text": "󰇣",
+            "tooltip": status,
+            "class": "unknown",
+        }
+
+except subprocess.TimeoutExpired:
+    output = {
+        "text": "󰅖",
+        "tooltip": "Dropbox no respon",
+        "class": "error",
+    }
+except Exception as error:
+    output = {
+        "text": "󰅖",
+        "tooltip": f"Error: {error}",
+        "class": "error",
+    }
+
+print(json.dumps(output, ensure_ascii=False))

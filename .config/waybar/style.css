@@ -9,9 +9,10 @@
 #waybar {
   background: transparent;
   color: @text;
-  margin: 5px 5px;
+  margin: 0.5rem 0.5rem;
 }
 
+#custom-dropbox,
 #language,
 #workspaces {
   border-radius: 1rem;
@@ -23,7 +24,7 @@
 #workspaces button {
   color: @lavender;
   border-radius: 1rem;
-  padding: 0.4rem;
+  padding: 0.5rem;
 }
 
 #workspaces button.active {
@@ -44,11 +45,12 @@
 #pulseaudio,
 #custom-lock,
 #network,
+#custom-dropbox,
 #language,
 #custom-power {
   background-color: @surface0;
   padding: 0.5rem 1rem;
-  margin: 5px 0;
+  margin: 0.5rem 0;
 }
 
 #clock {
