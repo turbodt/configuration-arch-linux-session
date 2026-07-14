@@ -22,6 +22,7 @@ plugins=(archlinux
 	vscode web-search
 	# k
 	tig
+	battery
 	gitfast
 	colored-man-pages
 	colorize
