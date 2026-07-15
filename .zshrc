@@ -1,6 +1,3 @@
-# Include common commonrc settings
-[[ -e ~/.commonrc ]] && emulate sh -c 'source ~/.commonrc'
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -31,6 +28,7 @@ plugins=(archlinux
 	dirhistory
 	# autojump
 	sudo
+    zsh-completions
 	zsh-syntax-highlighting
 	zsh-autosuggestions
 )
@@ -44,20 +42,19 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
 
+# Node Version Manager (don't work in commonrc)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-    source /etc/profile.d/vte-2.91.sh
-fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Include common commonrc settings
+[[ -e ~/.commonrc ]] && emulate sh -c 'source ~/.commonrc'
 
-# opencode
-export PATH=/home/daniel/.opencode/bin:$PATH

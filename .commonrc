@@ -3,34 +3,13 @@
 alias ll='ls -la'
 
 # auto start ssh-agent
-eval `ssh-agent -s`
+eval `ssh-agent -s` 1>/dev/null
 
-# auto startX at logging
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] && command -v startx >/dev/null 2>&1; then
-  exec startx
-fi
-
-# Fix for android studio on archlinux
-# https://wiki.archlinux.org/title/android
-export _JAVA_AWT_WM_NONREPARENTING=1
-
-# android development
-export ANDROID_SDK_ROOT=/usr/lib/android-sdk
-export ANDROID_PLATFORM_TOOLS=$ANDROID_SDK_ROOT/platform-tools
-export ANDROID_TOOLS=$ANDROID_SDK_ROOT/tools
-export ANDROID_CMD_LINE_TOOLS=$ANDROID_SDK_ROOT/cmdline-tools
-export PATH="$PATH:$ANDROID_PLATFORM_TOOLS:$ANDROID_TOOLS/bin:$ANDROID_CMD_LINE_TOOLS/latest/bin"
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+# Fuzzy Finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+# Opencode
+export PATH=/home/daniel/.opencode/bin:$PATH
 
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte-2.91.sh
-fi
+# OpenAI
+export OPENAI_API_KEY=
