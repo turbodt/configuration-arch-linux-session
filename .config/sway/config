@@ -96,7 +96,10 @@ input type:keyboard {
     bindsym $mod+w kill
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+Space exec $menu
+
+    # Start browser private window
+    bindsym $mod+n exec 'librewolf -P Daniel --private-window'
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -254,7 +257,7 @@ bindsym $mod+r mode "resize"
 #
 # Input:
 #
-bindsym $mod+space input type:keyboard xkb_switch_layout next
+bindsym $mod+Alt+space input type:keyboard xkb_switch_layout next
 
 #
 # Status Bar:
@@ -283,8 +286,15 @@ smart_borders on
 # Gaps
 gaps inner 2
 
-include colors/catpuccin_mocha
+include themes/catppuccin-mocha
 
+# target                 title     bg    text   indicator  border
+client.focused           $lavender $base $text  $rosewater $lavender
+client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+client.urgent            $peach    $base $peach $overlay0  $peach
+client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+client.background        $base
 
 #
 #

@@ -1,0 +1,14 @@
+show=drun
+prompt=Cerca
+width=640
+height=360
+location=center
+allow_images=true
+image_size=32
+insensitive=true
+term=foot
+matching=fuzzy
+sort_order=default
+gtk_dark=true
+hide_scroll=true
+no_actions=true
