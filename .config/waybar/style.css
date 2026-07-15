@@ -49,17 +49,15 @@
 #custom-lock,
 #network,
 #custom-dropbox,
+#temperature,
 #language,
 #power-profiles-daemon,
 #custom-power,
 #custom-suspend
 {
     background-color: @surface0;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding: 0.5rem 1rem;
     margin: 0 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 #clock {
@@ -70,12 +68,14 @@
 
 #power-profiles-daemon {
     padding-left: 0.5rem;
-    border-radius: 0 0 0.5rem 0;
 }
 #battery {
     margin-left: 1em;
     border-radius: 0 0 0 0.5rem;
     color: @green;
+}
+#temperature {
+    border-radius: 0 0 0.5rem 0;
 }
 
 #battery.charging {
