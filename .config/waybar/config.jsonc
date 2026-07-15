@@ -9,22 +9,40 @@
         "sway/language",
         "pulseaudio",
         "battery",
+        "power-profiles-daemon",
         "network",
-        "clock"
+        "clock",
+        "custom/suspend"
     ],
 
     "custom/dropbox": {
         "exec": "~/.config/waybar/scripts/dropbox-status",
         "return-type": "json",
         "interval": 10,
-        "tooltip": true,
-        "on-click": "foot -e dropbox-cli status",
-        "on-click-right": "xdg-open https://www.dropbox.com/home"
+        "tooltip": true
     },
 
     "sway/language": {
         "format": "{shortDescription} ({variant})",
         "tooltip-format": "{long}",
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
+
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Perfil energètic: {profile}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+
+    "custom/suspend": {
+        "format": "⏾",
+        "tooltip-format": "Suspendre",
+        "on-click": "sh -c 'swaylock -f && systemctl suspend'"
     }
 }

@@ -4,6 +4,7 @@ import json
 import subprocess
 
 try:
+
     result = subprocess.run(
         ["dropbox-cli", "status"],
         capture_output=True,
@@ -24,7 +25,7 @@ try:
         for word in ("not running", "isn't running", "no està executant")
     ):
         output = {
-            "text": "󰅖",
+            "text": "󰇣 󰅖",
             "tooltip": status,
             "class": "stopped",
         }
@@ -33,7 +34,7 @@ try:
         for word in ("syncing", "indexing", "connecting", "sincronitz")
     ):
         output = {
-            "text": "󰑓",
+            "text": "󰇣 󰑓",
             "tooltip": status,
             "class": "syncing",
         }
@@ -48,20 +49,20 @@ try:
         }
     else:
         output = {
-            "text": "󰇣",
+            "text": "󰇣 ?",
             "tooltip": status,
             "class": "unknown",
         }
 
 except subprocess.TimeoutExpired:
     output = {
-        "text": "󰅖",
+        "text": "󰇣 󰅖",
         "tooltip": "Dropbox no respon",
         "class": "error",
     }
 except Exception as error:
     output = {
-        "text": "󰅖",
+        "text": "󰇣 󰅖",
         "tooltip": f"Error: {error}",
         "class": "error",
     }
