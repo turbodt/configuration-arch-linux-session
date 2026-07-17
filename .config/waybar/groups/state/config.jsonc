@@ -1,0 +1,20 @@
+{
+    "group/group-state": {
+        "orientation": "horizontal",
+        "modules": [
+            "clock",
+            "sway/language"
+        ]
+    },
+
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+
+    "sway/language": {
+        "format": "{shortDescription} ({variant})",
+        "tooltip-format": "{long}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    }
+}

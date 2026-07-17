@@ -1,0 +1,53 @@
+@import "../../colors/palette.css";
+
+#group-workspaces * {
+    margin: 0;
+    margin-left: 1rem;
+}
+
+#workspaces.custom {
+    color: @text;
+    margin: 0;
+    padding: 0;
+    border-radius: 1rem;
+}
+
+#workspaces.custom * {
+    margin: 0;
+}
+
+#workspaces.custom button {
+    color: @text;
+    padding: 0;
+    padding-left: 0;
+    margin-left: 1rem;
+    border-radius: 1rem;
+}
+
+#workspaces.custom button:hover {
+    color: @overlay2;
+    background-color: @surface2;
+}
+
+#workspaces.custom button.focused {
+    color: @blue;
+}
+
+
+#workspaces.custom button.visible {
+    color: @blue;
+}
+
+#workspaces.custom button.urgent {
+    color: @red;
+}
+
+#workspaces.custom button.persistent {}
+
+#workspaces.custom button.empty {
+    color: @subtext0;
+}
+
+#workspaces.custom button.current_output {
+    color: @text;
+}

@@ -1,0 +1,43 @@
+{
+    "group/group-connectivity": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/dropbox",
+            "bluetooth",
+            "network"
+        ]
+    },
+
+
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": "  Connected",
+        "tooltip-format": "  {ifname} via {gwaddr}",
+        "format-linked": "  {ifname} (No IP)",
+        "format-disconnected": "⚠  Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click-right": "bash ~/.config/rofi/wifi_menu/rofi_wifi_menu"
+    },
+
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-disabled": "",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias}    󰁹 {device_battery_percentage}%",
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
+
+    "custom/dropbox": {
+        "exec": "./scripts/dropbox-status",
+        "return-type": "json",
+        "interval": 15,
+        "tooltip": true
+    }
+}

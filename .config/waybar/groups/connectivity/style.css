@@ -1,0 +1,16 @@
+@import "../../colors/palette.css";
+
+
+#bluetooth.off,
+#bluetooth.disabled {
+    color: @maroon;
+}
+#bluetooth {
+    color: @sapphire;
+    margin-left: 1em;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+#network {}
+
+#custom-dropbox {}

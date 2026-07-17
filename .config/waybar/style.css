@@ -1,63 +1,49 @@
-@import "mocha.css";
+@import "./colors/palette.css";
 
 * {
     animation-timing-function: steps(4);
     font-family: Meslo Nerd Font;
     font-size: 1em;
     min-height: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #waybar {
     background: transparent;
     color: @text;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 
-.modules-right {
-}
-.modules-left {
-}
-
-#workspaces {
-  border-radius: 0.5rem;
-  margin: 0rem 0.5rem;
-  background-color: @surface0;
-}
-
-#workspaces button {
-  color: @lavender;
-  border-radius: 1rem;
-  padding: 0rem 0.5rem;
-}
-
-#workspaces button.active {
-  color: @sky;
-  border-radius: 1rem;
-}
-
-#workspaces button:hover {
-  color: @sapphire;
-  border-radius: 1rem;
-}
-
-#custom-music,
-#tray,
-#backlight,
-#clock,
-#battery,
-#pulseaudio,
-#custom-lock,
-#network,
-#custom-dropbox,
-#temperature,
-#language,
-#power-profiles-daemon,
-#custom-power,
-#custom-suspend
-{
+#group-actions,
+#group-connectivity,
+#group-power,
+#group-sound,
+#group-state,
+#group-workspaces,
+#group-guard {
     background-color: @surface0;
-    padding: 0.5rem 1rem;
-    margin: 0 0;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    border-radius: 1.5rem;
+}
+
+#group-actions *,
+#group-connectivity *,
+#group-power *,
+#group-sound *,
+#group-state *,
+#group-workspaces *,
+#group-guard * {
+    margin-left: 1em;
 }
 
 #clock {
@@ -65,64 +51,9 @@
     color: @blue;
 }
 
-
-#power-profiles-daemon {
-    padding-left: 0.5rem;
-}
-#battery {
-    margin-left: 1em;
-    border-radius: 0 0 0 0.5rem;
-    color: @green;
-}
-#temperature {
-    border-radius: 0 0 0.5rem 0;
-}
-
-#battery.charging {
-    color: @green;
-}
-
-#battery.warning:not(.charging) {
-    color: @red;
-}
-
-#backlight {
-    color: @yellow;
-}
-
-#pulseaudio {
-    border-radius: 0 0 0.5rem 0;
-    color: @maroon;
-}
-
-#custom-music {
-    color: @mauve;
-    border-radius: 1rem;
-}
-
-#custom-lock {
-    color: @lavender;
-}
-
-#custom-power {
-    color: @red;
-}
-
-#tray {
-    border-radius: 1rem;
-}
-
-
-#network {
-    margin-left: 1em;
-    border-radius: 0 0 0 0.5rem;
-}
-
-#custom-dropbox {
-    border-radius: 0 0 0 0.5rem;
-}
-
-#custom-suspend {
-    margin-left: 1em;
-    border-radius: 0 0 0 1rem;
-}
+@import "./groups/actions/style.css";
+@import "./groups/connectivity/style.css";
+@import "./groups/power/style.css";
+@import "./groups/sound/style.css";
+@import "./groups/state/style.css";
+@import "./groups/workspaces/style.css";

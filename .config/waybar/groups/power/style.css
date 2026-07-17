@@ -1,0 +1,13 @@
+@import "../../colors/palette.css";
+
+
+#power-profiles-daemon {}
+#temperature {}
+
+#battery {}
+#battery.charging {
+    color: @green;
+}
+#battery.warning:not(.charging) {
+    color: @red;
+}

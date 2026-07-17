@@ -279,12 +279,12 @@ bar {
 font pango: Meslow Nerd Font 14
 
 # Window borders
-default_border pixel 2
+default_border pixel 1
 default_floating_border normal
 smart_borders on
 
 # Gaps
-gaps inner 2
+gaps inner 0
 
 include themes/catppuccin-mocha
 

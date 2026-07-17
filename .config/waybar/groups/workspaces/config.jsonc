@@ -1,0 +1,35 @@
+{
+    "group/group-workspaces": {
+        "orientation": "horizontal",
+        "modules": [
+            "sway/workspaces#custom",
+            "sway/scratchpad"
+        ]
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": true,
+        "format-icons": ["󰭋", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+
+    "sway/workspaces#custom": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "persistent-workspaces": {
+            "1": [],
+            "5": [],
+            "9": []
+        },
+        "format": "{icon}",
+        "format-icons": {
+            "high-priority-named": [ "10" ],
+            "10": "0",
+            "urgent": "",
+            "focused": "",
+            //"default": "",
+            "empty": "",
+        }
+    }
+}

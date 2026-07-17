@@ -1,0 +1,15 @@
+{
+    "group/group-actions": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/suspend"
+        ]
+    },
+
+
+    "custom/suspend": {
+        "format": "⏾",
+        "tooltip-format": "Suspendre",
+        "on-click": "sh -c 'swaylock -f && systemctl suspend'"
+    }
+}
