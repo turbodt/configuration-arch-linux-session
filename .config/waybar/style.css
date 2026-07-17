@@ -46,11 +46,6 @@
     margin-left: 1em;
 }
 
-#clock {
-    border-radius: 0 0 0.5rem 0;
-    color: @blue;
-}
-
 @import "./groups/actions/style.css";
 @import "./groups/connectivity/style.css";
 @import "./groups/power/style.css";

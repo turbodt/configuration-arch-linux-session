@@ -2,6 +2,7 @@
     "group/group-state": {
         "orientation": "horizontal",
         "modules": [
+            "sway/mode",
             "clock",
             "sway/language"
         ]
