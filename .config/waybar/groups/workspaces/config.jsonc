@@ -8,8 +8,8 @@
     },
     "sway/scratchpad": {
         "format": "{icon} {count}",
-        "show-empty": true,
-        "format-icons": ["󰭋", ""],
+        "show-empty": false,
+        "format-icons": ["", ""],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
