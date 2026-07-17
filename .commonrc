@@ -10,6 +10,3 @@ eval `ssh-agent -s` 1>/dev/null
 
 # Opencode
 export PATH=/home/daniel/.opencode/bin:$PATH
-
-# OpenAI
-export OPENAI_API_KEY=
