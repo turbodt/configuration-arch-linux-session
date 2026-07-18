@@ -1,0 +1,30 @@
+{
+    "group/group-wiz": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/wiz-power",
+            "custom/wiz-brightness"
+        ]
+    },
+
+    "custom/wiz-power": {
+        "exec": "$HOME/.config/waybar/groups/wiz/scripts/status power",
+        "return-type": "json",
+        "interval": 15,
+        "format": "{text}",
+        "on-click": "$HOME/.config/waybar/groups/wiz/scripts/toggle",
+        "tooltip": true
+    },
+
+    "custom/wiz-brightness": {
+        "exec": "$HOME/.config/waybar/groups/wiz/scripts/status brightness",
+        "return-type": "json",
+        "interval": 15,
+        "format": "󰃠  {text}",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-click": "$HOME/.config/waybar/groups/wiz/scripts/brightness menu",
+        "on-scroll-up": "$HOME/.config/waybar/groups/wiz/scripts/brightness up",
+        "on-scroll-down": "$HOME/.config/waybar/groups/wiz/scripts/brightness down",
+        "tooltip": true
+    }
+}

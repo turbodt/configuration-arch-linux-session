@@ -1,46 +1,101 @@
-{
-    "layer": "top",
-    "position": "top",
-    "include": [
-        "./groups/actions/config.jsonc",
-        "./groups/connectivity/config.jsonc",
-        "./groups/power/config.jsonc",
-        "./groups/state/config.jsonc",
-        "./groups/sound/config.jsonc",
-        "./groups/workspaces/config.jsonc"
-    ],
+[
+    {
+        "layer": "top",
+        "position": "top",
+        "output": [
+            "!AOC Q27B3MA 17ZP6HA000332",
+            "*"
+        ],
+        "include": [
+            "./groups/actions/config.jsonc",
+            "./groups/connectivity/config.jsonc",
+            "./groups/power/config.jsonc",
+            "./groups/state/config.jsonc",
+            "./groups/sound/config.jsonc",
+            "./groups/workspaces/config.jsonc"
+        ],
 
-    "modules-left": [
-        "group/group-workspaces"
-    ],
+        "modules-left": [
+            "group/group-workspaces"
+        ],
 
-    "modules-center": [
-        "group/group-state"
-    ],
+        "modules-center": [
+            "group/group-state"
+        ],
 
-    "modules-right": [
-        "group/group-sound",
-        "group/group-power",
-        "group/group-connectivity",
-        "group/group-actions"
-    ],
+        "modules-right": [
+            "group/group-sound",
+            "group/group-power",
+            "group/group-connectivity",
+            "group/group-actions"
+        ],
 
-    "tray": {
-        "icon-size": 20,
-        "spacing": 10
+        "tray": {
+            "icon-size": 20,
+            "spacing": 10
+        },
+
+        "cpu": {
+            "format": "{usage}% ",
+            "tooltip": false
+        },
+        "memory": {
+            "format": "{}% "
+        },
+
+        "backlight": {
+            // "device": "acpi_video1",
+            "format": "{percent}% {icon}",
+            "format-icons": ["", ""]
+        }
     },
+    {
+        "layer": "top",
+        "position": "top",
+        "output": "AOC Q27B3MA 17ZP6HA000332",
+        "include": [
+            "./groups/actions/config.jsonc",
+            "./groups/connectivity/config.jsonc",
+            "./groups/power/config.jsonc",
+            "./groups/state/config.jsonc",
+            "./groups/sound/config.jsonc",
+            "./groups/wiz/config.jsonc",
+            "./groups/workspaces/config.jsonc"
+        ],
 
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
+        "modules-left": [
+            "group/group-workspaces"
+        ],
 
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", ""]
+        "modules-center": [
+            "group/group-state"
+        ],
+
+        "modules-right": [
+            "group/group-sound",
+            "group/group-power",
+            "group/group-wiz",
+            "group/group-connectivity",
+            "group/group-actions"
+        ],
+
+        "tray": {
+            "icon-size": 20,
+            "spacing": 10
+        },
+
+        "cpu": {
+            "format": "{usage}% ",
+            "tooltip": false
+        },
+        "memory": {
+            "format": "{}% "
+        },
+
+        "backlight": {
+            // "device": "acpi_video1",
+            "format": "{percent}% {icon}",
+            "format-icons": ["", ""]
+        }
     }
-}
+]

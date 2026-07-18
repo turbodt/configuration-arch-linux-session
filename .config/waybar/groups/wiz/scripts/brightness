@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+step=10
+
+current_brightness() {
+    local response
+    response="$("$script_dir/wizctl" status)"
+    RESPONSE="$response" python - <<'PY'
+import json
+import os
+
+payload = json.loads(os.environ["RESPONSE"])
+print(payload.get("result", {}).get("dimming") or 50)
+PY
+}
+
+case "${1:-menu}" in
+    up)
+        current="$(current_brightness)"
+        level=$((current + step))
+        if [ "$level" -gt 100 ]; then
+            level=100
+        fi
+        ;;
+    down)
+        current="$(current_brightness)"
+        level=$((current - step))
+        if [ "$level" -lt 1 ]; then
+            level=1
+        fi
+        ;;
+    menu)
+        level="$(printf '%s\n' 10 25 50 75 100 | wofi --dmenu --prompt "Brillo WiZ")"
+        if [ -z "$level" ]; then
+            exit 0
+        fi
+        ;;
+    *)
+        level="$1"
+        ;;
+esac
+
+case "$level" in
+    ''|*[!0-9]*) exit 0 ;;
+esac
+
+if [ "$level" -lt 1 ]; then
+    level=1
+elif [ "$level" -gt 100 ]; then
+    level=100
+fi
+
+"$script_dir/wizctl" brightness "$level" >/dev/null

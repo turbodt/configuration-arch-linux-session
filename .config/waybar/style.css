@@ -22,6 +22,7 @@
 #group-power,
 #group-sound,
 #group-state,
+#group-wiz,
 #group-workspaces,
 #group-guard {
     background-color: @surface0;
@@ -41,6 +42,7 @@
 #group-power *,
 #group-sound *,
 #group-state *,
+#group-wiz *,
 #group-workspaces *,
 #group-guard * {
     margin-left: 1em;
@@ -51,4 +53,5 @@
 @import "./groups/power/style.css";
 @import "./groups/sound/style.css";
 @import "./groups/state/style.css";
+@import "./groups/wiz/style.css";
 @import "./groups/workspaces/style.css";

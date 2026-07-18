@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+response="$("$script_dir/wizctl" status)"
+state="$(RESPONSE="$response" python - <<'PY'
+import json
+import os
+
+payload = json.loads(os.environ["RESPONSE"])
+print("on" if payload.get("result", {}).get("state") else "off")
+PY
+)"
+
+if [ "$state" = "on" ]; then
+    "$script_dir/wizctl" off >/dev/null
+else
+    "$script_dir/wizctl" on >/dev/null
+fi

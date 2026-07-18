@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+mode="${1:-power}"
+
+if ! response="$("$script_dir/wizctl" status 2>&1)"; then
+    RESPONSE="$response" python - <<'PY'
+import json
+import os
+
+print(json.dumps({
+    "text": "󰌵 ?",
+    "tooltip": os.environ.get("RESPONSE", "WiZ no disponible"),
+    "class": "error",
+}))
+PY
+    exit 0
+fi
+
+MODE="$mode" RESPONSE="$response" python - <<'PY'
+import json
+import os
+
+try:
+    payload = json.loads(os.environ["RESPONSE"])
+    result = payload.get("result", {})
+except Exception as error:
+    print(json.dumps({
+        "text": "󰌵 ?",
+        "tooltip": f"Respuesta no válida: {error}",
+        "class": "error",
+    }))
+    raise SystemExit(0)
+
+state = result.get("state")
+brightness = result.get("dimming")
+temperature = result.get("temp")
+mode = os.environ.get("MODE", "power")
+
+classes = ["on" if state else "off"]
+
+if mode == "brightness":
+    percent = brightness or 0
+    filled = round(percent / 20)
+    bar = "▰" * filled + "▱" * (5 - filled)
+    text = f"{bar} {percent}%"
+else:
+    text = "󰌵"
+
+tooltip_parts = ["WiZ encendida" if state else "WiZ apagada"]
+if brightness is not None:
+    tooltip_parts.append(f"Brillo: {brightness}%")
+if temperature is not None:
+    tooltip_parts.append(f"Temperatura: {temperature}K")
+
+print(json.dumps({
+    "text": text,
+    "tooltip": "\n".join(tooltip_parts),
+    "class": classes,
+    "percentage": brightness or 0,
+}))
+PY

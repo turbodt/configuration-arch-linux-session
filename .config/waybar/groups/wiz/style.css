@@ -1,0 +1,16 @@
+@import "../../colors/palette.css";
+
+#custom-wiz-power.on,
+#custom-wiz-brightness.on {
+    color: @yellow;
+}
+
+#custom-wiz-power.off,
+#custom-wiz-brightness.off {
+    color: @subtext0;
+}
+
+#custom-wiz-power.error,
+#custom-wiz-brightness.error {
+    color: @red;
+}

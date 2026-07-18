@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo="$HOME/coding/python/2026-07-18-wizctl"
+ip="192.168.1.180"
+
+cd "$repo"
+PYTHONPATH=src python -m wizctl "$ip" --timeout 3 --raw "$@"
