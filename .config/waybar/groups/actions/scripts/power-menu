@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+option="$(printf '%s\n' \
+    "Bloquear pantalla" \
+    "Suspender" \
+    "Hibernar" \
+    "Suspender y luego hibernar" \
+    "Sueño híbrido" \
+    "Reiniciar" \
+    "Apagar" \
+    | wofi --dmenu --prompt "Energía")"
+
+case "$option" in
+    "Bloquear pantalla")
+        swaylock -f
+        ;;
+    "Suspender")
+        swaylock -f && systemctl suspend
+        ;;
+    "Hibernar")
+        swaylock -f && systemctl hibernate
+        ;;
+    "Suspender y luego hibernar")
+        swaylock -f && systemctl suspend-then-hibernate
+        ;;
+    "Sueño híbrido")
+        swaylock -f && systemctl hybrid-sleep
+        ;;
+    "Reiniciar")
+        systemctl reboot
+        ;;
+    "Apagar")
+        systemctl poweroff
+        ;;
+esac

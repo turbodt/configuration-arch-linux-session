@@ -2,14 +2,14 @@
     "group/group-actions": {
         "orientation": "horizontal",
         "modules": [
-            "custom/suspend"
+            "custom/power-menu"
         ]
     },
 
 
-    "custom/suspend": {
-        "format": "⏾",
-        "tooltip-format": "Suspendre",
-        "on-click": "sh -c 'swaylock -f && systemctl suspend'"
+    "custom/power-menu": {
+        "format": "⏻",
+        "tooltip-format": "Opciones de energía",
+        "on-click": "$HOME/.config/waybar/groups/actions/scripts/power-menu"
     }
 }
