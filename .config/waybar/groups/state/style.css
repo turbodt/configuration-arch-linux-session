@@ -7,10 +7,10 @@
 #clock {}
 
 #mode {
-    border-radius: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-right: 0.75rem;
+    color: @peach;
+}
 
-    background-color: @peach;
-    color: @base;
+#custom-dropbox {
+    padding-right: 0.75rem;
 }

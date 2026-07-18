@@ -4,8 +4,13 @@
         "modules": [
             "sway/mode",
             "clock",
-            "sway/language"
+            "sway/language",
+            "custom/dropbox"
         ]
+    },
+
+    "sway/mode": {
+        "format": ""
     },
 
     "clock": {
@@ -17,5 +22,12 @@
         "format": "{shortDescription} ({variant})",
         "tooltip-format": "{long}",
         "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+    },
+
+    "custom/dropbox": {
+        "exec": "$HOME/.config/waybar/groups/state/scripts/dropbox-status",
+        "return-type": "json",
+        "interval": 15,
+        "tooltip": true
     }
 }

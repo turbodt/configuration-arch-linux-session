@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+
+import json
+import signal
+import subprocess
+import sys
+import threading
+from datetime import datetime
+
+
+LAYOUT_LABELS = {
+    "English (Dvorak)": "en",
+    "English (Dvorak, intl., with dead keys)": "en-intl",
+    "Catalan (Spain, with middle-dot L)": "ca",
+    "Spanish": "es",
+}
+
+
+dirty = threading.Event()
+stopping = threading.Event()
+subscribe_process = None
+
+
+def swaymsg(*args):
+    result = subprocess.run(
+        ["swaymsg", *args],
+        capture_output=True,
+        text=True,
+        timeout=2,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return None
+
+
+def get_mode():
+    state = swaymsg("-t", "get_binding_state") or {}
+    return state.get("name", "default")
+
+
+def get_layout():
+    inputs = swaymsg("-t", "get_inputs") or []
+    for input_device in inputs:
+        if input_device.get("type") != "keyboard":
+            continue
+
+        layout = input_device.get("xkb_active_layout_name")
+        if layout:
+            return layout
+
+    return "unknown"
+
+
+def output_state():
+    mode = get_mode()
+    layout = get_layout()
+    layout_label = LAYOUT_LABELS.get(layout, layout)
+    current_time = datetime.now().strftime("%H:%M")
+
+    parts = [current_time, layout_label]
+    css_class = ""
+
+    if mode == "resize":
+        parts.insert(0, mode)
+        css_class = "resize"
+
+    print(
+        json.dumps(
+            {
+                "text": "  ".join(parts),
+                "tooltip": layout,
+                "class": css_class,
+            },
+            ensure_ascii=False,
+        ),
+        flush=True,
+    )
+
+
+def subscribe_sway():
+    global subscribe_process
+
+    while not stopping.is_set():
+        try:
+            subscribe_process = subprocess.Popen(
+                ["swaymsg", "-t", "subscribe", '["mode","input"]'],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                text=True,
+            )
+
+            if subscribe_process.stdout is None:
+                subscribe_process.wait(timeout=2)
+                continue
+
+            for line in subscribe_process.stdout:
+                if stopping.is_set():
+                    break
+                if line.strip():
+                    dirty.set()
+        except Exception:
+            dirty.set()
+        finally:
+            subscribe_process = None
+
+
+def cleanup(_signum=None, _frame=None):
+    stopping.set()
+    dirty.set()
+
+    if subscribe_process and subscribe_process.poll() is None:
+        subscribe_process.terminate()
+        try:
+            subscribe_process.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            subscribe_process.kill()
+
+
+def seconds_until_next_minute():
+    now = datetime.now()
+    return max(1, 60 - now.second)
+
+
+def main():
+    signal.signal(signal.SIGINT, cleanup)
+    signal.signal(signal.SIGTERM, cleanup)
+
+    threading.Thread(target=subscribe_sway, daemon=True).start()
+
+    output_state()
+    while not stopping.is_set():
+        dirty.wait(seconds_until_next_minute())
+        dirty.clear()
+        if not stopping.is_set():
+            output_state()
+
+    cleanup()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
