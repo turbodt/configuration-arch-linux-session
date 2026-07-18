@@ -34,8 +34,8 @@ output * bg /home/daniel/Images/wallpapers/switzerland-mountains-pink-blue-sky.j
 
 set $laptop_display eDP-1
 
-output DP-9 resolution 1920x1080 transform 90 position -1080,-420
-output DP-10 resolution 1920x1080 position 0,0
+output "HP Inc. HP 27w CNC81729XS" resolution 1920x1080 transform 90 position -1080,-420
+output "AOC Q27B3MA 17ZP6HA000332" resolution 1920x1080 position 0,0
 output $laptop_display scale 2
 
 # Disable the built-in screen when the lid is closed
