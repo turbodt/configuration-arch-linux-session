@@ -5,49 +5,59 @@
     margin-left: 1rem;
 }
 
-#workspaces.custom {
+#group-workspaces #workspaces.custom {
     color: @text;
+    background-color: @surface2;
     margin: 0;
     padding: 0;
+
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    border-radius: 0.75rem;
+}
+
+#group-workspaces #workspaces.custom * {
+    margin: 0;
+}
+
+#group-workspaces #workspaces.custom button {
+    color: @overlay1;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
     border-radius: 1rem;
 }
 
-#workspaces.custom * {
-    margin: 0;
-}
-
-#workspaces.custom button {
+#group-workspaces #workspaces.custom button.current_output {
     color: @text;
-    padding: 0;
-    padding-left: 0;
-    margin-left: 1rem;
-    border-radius: 1rem;
 }
 
-#workspaces.custom button:hover {
+#group-workspaces #workspaces.custom button:hover {
     color: @overlay2;
     background-color: @surface2;
 }
 
-#workspaces.custom button.focused {
-    color: @blue;
+#group-workspaces #workspaces.custom button.focused {
+    color: @teal;
+    background-color: @surface2;
+}
+
+#group-workspaces #workspaces.custom button.focused.current_output {
+    color: @base;
+    background-color: @teal;
 }
 
 
-#workspaces.custom button.visible {
+#group-workspaces #workspaces.custom button.hidden {
     color: @blue;
 }
 
-#workspaces.custom button.urgent {
+#group-workspaces #workspaces.custom button.urgent {
     color: @red;
 }
 
+
 #workspaces.custom button.persistent {}
 
-#workspaces.custom button.empty {
-    color: @subtext0;
-}
-
-#workspaces.custom button.current_output {
-    color: @text;
-}
+#workspaces.custom button.empty {}

@@ -16,20 +16,16 @@
 
     "sway/workspaces#custom": {
         "disable-scroll": true,
-        "all-outputs": false,
-        "persistent-workspaces": {
-            "1": [],
-            "5": [],
-            "9": []
-        },
-        "format": "{icon}",
+        "all-outputs": true,
+        "persistent-workspaces": {},
+        "format": "{name}",
         "format-icons": {
             "high-priority-named": [ "10" ],
             "10": "0",
             "urgent": "",
             "focused": "",
             //"default": "",
-            "empty": "",
+            "empty": ""
         }
     }
 }
