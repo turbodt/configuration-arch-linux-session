@@ -5,8 +5,11 @@ alias ll='ls -la'
 # auto start ssh-agent
 eval `ssh-agent -s` 1>/dev/null
 
+# local applications
+export PATH="$PATH:/home/daniel/.local/bin"
+
 # Fuzzy Finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Opencode
-export PATH=/home/daniel/.opencode/bin:$PATH
+export PATH="$PATH:/home/daniel/.opencode/bin"
