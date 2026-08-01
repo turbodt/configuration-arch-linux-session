@@ -38,14 +38,11 @@
     background-color: @surface2;
 }
 
-#group-workspaces #workspaces.custom button.focused {
-    color: @teal;
-    background-color: @surface2;
-}
+#group-workspaces #workspaces.custom button.focused {}
 
 #group-workspaces #workspaces.custom button.focused.current_output {
     color: @base;
-    background-color: @teal;
+    background-color: @blue;
 }
 
 
