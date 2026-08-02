@@ -33,9 +33,11 @@ output * bg /home/daniel/Images/wallpapers/switzerland-mountains-pink-blue-sky.j
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 set $laptop_display eDP-1
+set $output_left "HP Inc. HP 27w CNC81729XS"
+set $output_right "AOC Q27B3MA 17ZP6HA000332"
 
-output "HP Inc. HP 27w CNC81729XS" resolution 1920x1080 transform 90 position -1080,-420
-output "AOC Q27B3MA 17ZP6HA000332" resolution 1920x1080 position 0,0
+output $output_left resolution 1920x1080 transform 90 position -1080,-420
+output $output_right resolution 1920x1080 position 0,0
 output $laptop_display scale 2
 
 # Disable the built-in screen when the lid is closed
@@ -170,6 +172,9 @@ input type:keyboard {
 
     bindsym $mod+Shift+bracketleft move container to workspace prev
     bindsym $mod+Shift+bracketright move container to workspace next
+
+    bindsym $mod+Shift+Alt+bracketleft move workspace to left
+    bindsym $mod+Shift+Alt+bracketright move workspace to right
 #
 # Layout stuff:
 #
