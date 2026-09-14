@@ -1,0 +1,36 @@
+#!/bin/sh
+
+UNIR_FIRST=41
+UNIR_LAST=50
+
+UNIR_WALLPAPER="$HOME/Images/wallpapers/UNIR_1.png"
+DEFAULT_WALLPAPER="$HOME/Images/wallpapers/switzerland-mountains-pink-blue-sky.jpg"
+
+state=""
+
+swaymsg -m -t subscribe '["workspace"]' |
+jq -c --unbuffered --argjson first "$UNIR_FIRST" --argjson last "$UNIR_LAST" '
+    select(.change == "focus")
+    | .current
+    | (.num >= $first and .num <= $last)
+' |
+while read -r unir; do
+    if [ "$unir" = "true" ]; then
+        new_state="unir"
+    else
+        new_state="default"
+    fi
+
+    # Nothing to do if the wallpaper state hasn't changed.
+    if [ "$new_state" = "$state" ]; then
+        continue
+    fi
+
+    state="$new_state"
+
+    if [ "$state" = "unir" ]; then
+        swaymsg "output * bg \"$UNIR_WALLPAPER\" fill"
+    else
+        swaymsg "output * bg \"$DEFAULT_WALLPAPER\" fill"
+    fi
+done

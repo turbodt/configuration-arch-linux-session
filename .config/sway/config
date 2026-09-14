@@ -39,6 +39,7 @@ set $output_right "AOC Q27B3MA 17ZP6HA000332"
 output $output_left resolution 1920x1080 transform 90 position -1080,-420
 output $output_right resolution 1920x1080 position 0,0
 output $laptop_display scale 2
+# output $laptop_display scale 1
 
 # Disable the built-in screen when the lid is closed
 bindswitch --reload --locked lid:on output $laptop_display disable
@@ -307,5 +308,7 @@ client.background        $base
 #
 
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+include ./unir
 
 include /etc/sway/config.d/*

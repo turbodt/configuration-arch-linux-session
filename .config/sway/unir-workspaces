@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -eu
+
+workspaces=$(swaymsg -t get_workspaces -r)
+
+# Find the highest unnamed numeric workspace >= 42.
+last=$(
+    printf '%s' "$workspaces" |
+    jq -r '
+        .[]
+        | select(.num >= 41)
+        | select(.num <= 50)
+        | .num
+    ' |
+    sort -n |
+    tail -n1
+)
+# NOTE: jq filter `select(.name | test("^[0-9]+$"))`
+
+if [ -z "$last" ]; then
+    last=41
+fi
+
+next=$((last + 1))
+
+if [ "${1:-}" = "move" ]; then
+    swaymsg "move container to workspace \"${next}:$((next - 40))\""
+fi
+
+swaymsg "workspace \"${next}:$((next - 40))\""
