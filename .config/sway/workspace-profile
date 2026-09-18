@@ -109,7 +109,7 @@ switch_profile() {
     fi
 
     target="$(workspace_name "$target_profile" "$target_num")"
-    swaymsg "workspace \"$target\"" >/dev/null
+    swaymsg "workspace number \"$target\"" >/dev/null
 }
 
 cycle_workspace() {
