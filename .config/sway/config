@@ -171,6 +171,8 @@ input type:keyboard {
     bindsym $mod+bracketleft exec ~/.config/sway/workspace-profile prev
     bindsym $mod+bracketright exec ~/.config/sway/workspace-profile next
 
+    bindsym $mod+m exec ~/.config/sway/workspace-rename
+
     bindsym $mod+Shift+bracketleft exec ~/.config/sway/workspace-profile move-prev
     bindsym $mod+Shift+bracketright exec ~/.config/sway/workspace-profile move-next
 

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+current=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).name')
+[ -n "$current" ] || exit 0
+
+new=$(printf '%s\n' "$current" | wofi --dmenu --prompt "Rename workspace")
+[ -n "$new" ] || exit 0
+[ "$new" = "$current" ] && exit 0
+
+swaymsg rename workspace "$current" to "$new"
