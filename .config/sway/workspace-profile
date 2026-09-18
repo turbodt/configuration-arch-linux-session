@@ -167,12 +167,12 @@ case "${1:-}" in
     workspace)
         profile="$(current_profile)"
         target="$(target_for_key "$profile" "${2:-}")"
-        swaymsg "workspace \"$target\"" >/dev/null
+        swaymsg "workspace number \"$target\"" >/dev/null
         ;;
     move)
         profile="$(current_profile)"
         target="$(target_for_key "$profile" "${2:-}")"
-        swaymsg "move container to workspace \"$target\"; workspace \"$target\"" >/dev/null
+        swaymsg "move container to workspace \"$target\"; workspace number \"$target\"" >/dev/null
         ;;
     next|prev)
         cycle_workspace "$1"
