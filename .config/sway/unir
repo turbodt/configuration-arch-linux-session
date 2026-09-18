@@ -1,38 +1,5 @@
 set $unirmode $mod+u
 
-exec ~/.config/sway/unir-wallpaper
+exec_always ~/.config/sway/workspace-profile-daemon --replace
 
-bindsym $unirmode mode "UNIR"
-bindsym --release $unirmode workspace \"41:UNIR\"; mode "default"
-
-mode "UNIR" {
-    bindsym Escape mode "default"
-    bindsym $unirmode mode "default"
-
-    bindsym $unirmode+1 workspace \"41:UNIR\"; mode "default"
-    bindsym $unirmode+2 workspace \"42:2\"; mode "default"
-    bindsym $unirmode+3 workspace \"43:3\"; mode "default"
-    bindsym $unirmode+4 workspace \"44:4\"; mode "default"
-    bindsym $unirmode+5 workspace \"45:5\"; mode "default"
-    bindsym $unirmode+6 workspace \"46:6\"; mode "default"
-    bindsym $unirmode+7 workspace \"47:7\"; mode "default"
-    bindsym $unirmode+8 workspace \"48:8\"; mode "default"
-    bindsym $unirmode+9 workspace \"49:9\"; mode "default"
-    bindsym $unirmode+0 workspace \"50:0"; mode "default"
-
-
-    bindsym $unirmode+Shift+1 move container to workspace \"41:UNIR\"; workspace number 41; mode "default"
-    bindsym $unirmode+Shift+2 move container to workspace \"42:2\"; workspace number 42; mode "default"
-    bindsym $unirmode+Shift+3 move container to workspace \"43:3\"; workspace number 43; mode "default"
-    bindsym $unirmode+Shift+4 move container to workspace \"44:4\"; workspace number 44; mode "default"
-    bindsym $unirmode+Shift+5 move container to workspace \"45:5\"; workspace number 45; mode "default"
-    bindsym $unirmode+Shift+6 move container to workspace \"46:6\"; workspace number 46; mode "default"
-    bindsym $unirmode+Shift+7 move container to workspace \"47:7\"; workspace number 47; mode "default"
-    bindsym $unirmode+Shift+8 move container to workspace \"48:8\"; workspace number 48; mode "default"
-    bindsym $unirmode+Shift+9 move container to workspace \"49:9\"; workspace number 49; mode "default"
-    bindsym $unirmode+Shift+0 move container to workspace \"50:0\"; workspace number 50; mode "default"
-
-
-    bindsym $unirmode+c exec ~/.config/sway/unir-workspaces; mode "default"
-    bindsym $unirmode+Shift+c exec ~/.config/sway/unir-workspaces move; mode "default"
-}
+bindsym $unirmode exec ~/.config/sway/workspace-profile toggle unir

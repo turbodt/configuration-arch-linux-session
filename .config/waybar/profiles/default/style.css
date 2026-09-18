@@ -1,0 +1,19 @@
+@import "../../style.css";
+
+#workspaces.custom button#sway-workspace-41\:UNIR,
+#workspaces.custom button#sway-workspace-UNIR,
+#workspaces.custom button#sway-workspace-42\:2,
+#workspaces.custom button#sway-workspace-43\:3,
+#workspaces.custom button#sway-workspace-44\:4,
+#workspaces.custom button#sway-workspace-45\:5,
+#workspaces.custom button#sway-workspace-46\:6,
+#workspaces.custom button#sway-workspace-47\:7,
+#workspaces.custom button#sway-workspace-48\:8,
+#workspaces.custom button#sway-workspace-49\:9,
+#workspaces.custom button#sway-workspace-50\:0 {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    font-size: 0;
+    opacity: 0;
+}

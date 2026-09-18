@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+
+import json
+import os
+import pathlib
+import signal
+import subprocess
+import sys
+import time
+
+
+PROFILES = {
+    "default": {
+        "first": 1,
+        "last": 10,
+        "wallpaper": "~/Images/wallpapers/switzerland-mountains-pink-blue-sky.jpg",
+    },
+    "unir": {
+        "first": 41,
+        "last": 50,
+        "wallpaper": "~/Images/wallpapers/UNIR_1.png",
+    },
+}
+
+STATE_DIR = pathlib.Path(os.environ.get("XDG_CACHE_HOME", "~/.cache")).expanduser() / "sway-workspace-profiles"
+PID_FILE = STATE_DIR / "daemon.pid"
+WAYBAR = pathlib.Path("~/.config/waybar/launch").expanduser()
+
+
+def run(*args):
+    subprocess.run(args, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def profile_for_num(num):
+    for name, profile in PROFILES.items():
+        if profile["first"] <= num <= profile["last"]:
+            return name
+
+    return "default"
+
+
+def remember(profile, num):
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    (STATE_DIR / profile).write_text(f"{num}\n", encoding="utf-8")
+    (STATE_DIR / "current").write_text(f"{profile}\n", encoding="utf-8")
+
+
+def apply_profile(profile):
+    wallpaper = pathlib.Path(PROFILES[profile]["wallpaper"]).expanduser()
+    run("swaymsg", "output", "*", "bg", str(wallpaper), "fill")
+
+    if WAYBAR.exists():
+        run(str(WAYBAR), "--replace", profile)
+
+
+def replace_existing():
+    if not PID_FILE.exists():
+        return
+
+    try:
+        pid = int(PID_FILE.read_text(encoding="utf-8").strip())
+    except ValueError:
+        return
+
+    if pid == os.getpid():
+        return
+
+    try:
+        os.kill(pid, signal.SIGTERM)
+    except ProcessLookupError:
+        return
+
+    for _ in range(20):
+        try:
+            os.kill(pid, 0)
+        except ProcessLookupError:
+            return
+        time.sleep(0.05)
+
+
+def handle_workspace(workspace, active_profile):
+    if not workspace:
+        return active_profile
+
+    num = workspace.get("num")
+    if not isinstance(num, int):
+        return active_profile
+
+    profile = profile_for_num(num)
+    remember(profile, num)
+
+    if profile != active_profile:
+        apply_profile(profile)
+        return profile
+
+
+    return active_profile
+
+
+def focused_workspace():
+    result = subprocess.run(
+        ["swaymsg", "-t", "get_workspaces", "-r"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+
+    try:
+        workspaces = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return None
+
+    for workspace in workspaces:
+        if workspace.get("focused"):
+            return workspace
+
+
+def main():
+    if "--replace" in sys.argv[1:]:
+        replace_existing()
+
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    PID_FILE.write_text(f"{os.getpid()}\n", encoding="utf-8")
+
+    active_profile = None
+    active_profile = handle_workspace(focused_workspace(), active_profile)
+
+    process = subprocess.Popen(
+        ["swaymsg", "-m", "-t", "subscribe", '["workspace"]'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+    )
+
+    if process.stdout is None:
+        return 1
+
+
+    for line in process.stdout:
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+
+        if event.get("change") == "focus":
+            active_profile = handle_workspace(event.get("current"), active_profile)
+
+    return process.wait()
+
+
+if __name__ == "__main__":
+    sys.exit(main())

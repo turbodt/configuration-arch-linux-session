@@ -1,0 +1,74 @@
+[
+    {
+        "layer": "top",
+        "position": "top",
+        "output": [
+            "!AOC Q27B3MA 17ZP6HA000332",
+            "*"
+        ],
+        "include": [
+            "./groups/actions/config.jsonc",
+            "./groups/connectivity/config.jsonc",
+            "./groups/power/config.jsonc",
+            "./groups/state/config.jsonc",
+            "./groups/sound/config.jsonc",
+            "./groups/workspaces/config.jsonc"
+        ],
+
+        "modules-left": [
+            "group/group-workspaces"
+        ],
+
+        "modules-center": [
+            "group/group-state"
+        ],
+
+        "modules-right": [
+            "group/group-sound",
+            "group/group-power",
+            "group/group-connectivity",
+            "group/group-actions"
+        ],
+
+        "custom/profile": {
+            "exec": "printf UNIR",
+            "interval": "once",
+            "format": "UNIR"
+        }
+    },
+    {
+        "layer": "top",
+        "position": "top",
+        "output": "AOC Q27B3MA 17ZP6HA000332",
+        "include": [
+            "./groups/actions/config.jsonc",
+            "./groups/connectivity/config.jsonc",
+            "./groups/power/config.jsonc",
+            "./groups/state/config.jsonc",
+            "./groups/sound/config.jsonc",
+            "./groups/workspaces/config.jsonc"
+        ],
+
+        "modules-left": [
+            "group/group-workspaces"
+        ],
+
+        "modules-center": [
+            "custom/profile",
+            "group/group-state"
+        ],
+
+        "modules-right": [
+            "group/group-sound",
+            "group/group-power",
+            "group/group-connectivity",
+            "group/group-actions"
+        ],
+
+        "custom/profile": {
+            "exec": "printf UNIR",
+            "interval": "once",
+            "format": "UNIR"
+        }
+    }
+]

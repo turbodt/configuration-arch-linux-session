@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -eu
+
+profile="default"
+replace=0
+
+if [ "${1:-}" = "--replace" ]; then
+    replace=1
+    profile="${2:-default}"
+else
+    profile="${1:-default}"
+fi
+
+case "$profile" in
+    default)
+        config="$HOME/.config/waybar/config.jsonc"
+        style="$HOME/.config/waybar/profiles/default/style.css"
+        ;;
+    unir)
+        config="$HOME/.config/waybar/profiles/unir/config.jsonc"
+        style="$HOME/.config/waybar/profiles/unir/style.css"
+        ;;
+    *)
+        printf 'unknown waybar profile: %s\n' "$profile" >&2
+        exit 2
+        ;;
+esac
+
+if [ "$replace" -eq 1 ]; then
+    pkill -x waybar 2>/dev/null || true
+    waybar -c "$config" -s "$style" >/dev/null 2>&1 &
+    exit 0
+fi
+
+exec waybar -c "$config" -s "$style"

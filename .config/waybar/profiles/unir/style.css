@@ -1,0 +1,50 @@
+@import "../../style.css";
+
+#group-workspaces,
+#group-state,
+
+
+#custom-profile {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 1.5rem;
+    font-weight: bold;
+}
+
+
+#group-workspaces #workspaces.custom button.focused.current_output {
+    background-color: @red;
+}
+
+#workspaces.custom button:not(
+    #sway-workspace-41\:UNIR
+):not(
+    #sway-workspace-UNIR
+):not(
+    #sway-workspace-42\:2
+):not(
+    #sway-workspace-43\:3
+):not(
+    #sway-workspace-44\:4
+):not(
+    #sway-workspace-45\:5
+):not(
+    #sway-workspace-46\:6
+):not(
+    #sway-workspace-47\:7
+):not(
+    #sway-workspace-48\:8
+):not(
+    #sway-workspace-49\:9
+):not(
+    #sway-workspace-50\:0
+) {
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    font-size: 0;
+    opacity: 0;
+}

@@ -1,0 +1,190 @@
+#!/bin/sh
+
+set -eu
+
+STATE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/sway-workspace-profiles"
+
+mkdir -p "$STATE_DIR"
+
+focused_num() {
+    swaymsg -t get_workspaces -r | jq -r '.[] | select(.focused) | .num'
+}
+
+profile_for_num() {
+    num="$1"
+
+    if [ "$num" -ge 41 ] && [ "$num" -le 50 ]; then
+        printf '%s\n' unir
+        return
+    fi
+
+    printf '%s\n' default
+}
+
+current_profile() {
+    profile_for_num "$(focused_num)"
+}
+
+profile_first_num() {
+    case "$1" in
+        default) printf '%s\n' 1 ;;
+        unir) printf '%s\n' 41 ;;
+        *) exit 2 ;;
+    esac
+}
+
+profile_last_num() {
+    case "$1" in
+        default) printf '%s\n' 10 ;;
+        unir) printf '%s\n' 50 ;;
+        *) exit 2 ;;
+    esac
+}
+
+workspace_name() {
+    profile="$1"
+    num="$2"
+
+    case "$profile" in
+        default)
+            printf '%s\n' "$num"
+            ;;
+        unir)
+            case "$num" in
+                41) printf '%s\n' '41:UNIR' ;;
+                50) printf '%s\n' '50:0' ;;
+                *) printf '%s:%s\n' "$num" "$((num - 40))" ;;
+            esac
+            ;;
+        *)
+            exit 2
+            ;;
+    esac
+}
+
+key_to_offset() {
+    case "$1" in
+        1) printf '%s\n' 0 ;;
+        2) printf '%s\n' 1 ;;
+        3) printf '%s\n' 2 ;;
+        4) printf '%s\n' 3 ;;
+        5) printf '%s\n' 4 ;;
+        6) printf '%s\n' 5 ;;
+        7) printf '%s\n' 6 ;;
+        8) printf '%s\n' 7 ;;
+        9) printf '%s\n' 8 ;;
+        0) printf '%s\n' 9 ;;
+        *) exit 2 ;;
+    esac
+}
+
+target_for_key() {
+    profile="$1"
+    key="$2"
+    first="$(profile_first_num "$profile")"
+    offset="$(key_to_offset "$key")"
+    num="$((first + offset))"
+
+    workspace_name "$profile" "$num"
+}
+
+remember_current() {
+    num="$(focused_num)"
+    profile="$(profile_for_num "$num")"
+
+    printf '%s\n' "$num" > "$STATE_DIR/$profile"
+}
+
+switch_profile() {
+    target_profile="$1"
+    first="$(profile_first_num "$target_profile")"
+    last="$(profile_last_num "$target_profile")"
+    target_num="$first"
+
+    if [ -f "$STATE_DIR/$target_profile" ]; then
+        saved="$(cat "$STATE_DIR/$target_profile")"
+        if [ "$saved" -ge "$first" ] && [ "$saved" -le "$last" ]; then
+            target_num="$saved"
+        fi
+    fi
+
+    target="$(workspace_name "$target_profile" "$target_num")"
+    swaymsg "workspace \"$target\"" >/dev/null
+}
+
+cycle_workspace() {
+    direction="$1"
+    move_container="${2:-0}"
+    num="$(focused_num)"
+    profile="$(profile_for_num "$num")"
+    first="$(profile_first_num "$profile")"
+    last="$(profile_last_num "$profile")"
+
+    case "$direction" in
+        next)
+            target_num="$((num + 1))"
+            if [ "$target_num" -gt "$last" ]; then
+                target_num="$first"
+            fi
+            ;;
+        prev)
+            target_num="$((num - 1))"
+            if [ "$target_num" -lt "$first" ]; then
+                target_num="$last"
+            fi
+            ;;
+        *)
+            exit 2
+            ;;
+    esac
+
+    target="$(workspace_name "$profile" "$target_num")"
+    if [ "$move_container" -eq 1 ]; then
+        swaymsg "move container to workspace \"$target\"; workspace \"$target\"" >/dev/null
+    else
+        swaymsg "workspace \"$target\"" >/dev/null
+    fi
+}
+
+case "${1:-}" in
+    current)
+        current_profile
+        ;;
+    remember-current)
+        remember_current
+        ;;
+    switch)
+        switch_profile "${2:-}"
+        ;;
+    toggle)
+        remember_current
+        if [ "$(current_profile)" = "${2:-}" ]; then
+            switch_profile default
+        else
+            switch_profile "${2:-}"
+        fi
+        ;;
+    workspace)
+        profile="$(current_profile)"
+        target="$(target_for_key "$profile" "${2:-}")"
+        swaymsg "workspace \"$target\"" >/dev/null
+        ;;
+    move)
+        profile="$(current_profile)"
+        target="$(target_for_key "$profile" "${2:-}")"
+        swaymsg "move container to workspace \"$target\"; workspace \"$target\"" >/dev/null
+        ;;
+    next|prev)
+        cycle_workspace "$1"
+        ;;
+    move-next)
+        cycle_workspace next 1
+        ;;
+    move-prev)
+        cycle_workspace prev 1
+        ;;
+    *)
+        printf 'usage: %s current|remember-current|switch PROFILE|toggle PROFILE|workspace KEY|move KEY|next|prev|move-next|move-prev\n' "$0" >&2
+        exit 2
+        ;;
+esac
