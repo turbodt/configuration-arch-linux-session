@@ -16,9 +16,9 @@
 
     "sway/workspaces#custom": {
         "disable-scroll": true,
-        "all-outputs": true,
+        "all-outputs": false,
         "persistent-workspaces": {},
-        "format": "{name}",
+        "format": "{value}",
         "format-icons": {
             "high-priority-named": [ "10" ],
             "10": "0",

@@ -29,7 +29,9 @@ esac
 
 if [ "$replace" -eq 1 ]; then
     pkill -x waybar 2>/dev/null || true
-    waybar -c "$config" -s "$style" >/dev/null 2>&1 &
+    ~/coding/c++/Waybar/build/waybar -c "$config" -s "$style" >/dev/null 2>&1 &
+    # For debug, use instead:
+    # GTK_DEBUG=interactive ~/coding/c++/Waybar/build/waybar -c "$config" -s "$style" >/dev/null 2>&1 &
     exit 0
 fi
 

@@ -1,18 +1,22 @@
 @import "../../style.css";
 
-#workspaces.custom button#sway-workspace-41\:UNIR,
-#workspaces.custom button#sway-workspace-UNIR,
-#workspaces.custom button#sway-workspace-42\:2,
-#workspaces.custom button#sway-workspace-43\:3,
-#workspaces.custom button#sway-workspace-44\:4,
-#workspaces.custom button#sway-workspace-45\:5,
-#workspaces.custom button#sway-workspace-46\:6,
-#workspaces.custom button#sway-workspace-47\:7,
-#workspaces.custom button#sway-workspace-48\:8,
-#workspaces.custom button#sway-workspace-49\:9,
-#workspaces.custom button#sway-workspace-50\:0 {
+#group-workspaces #workspaces.custom button.workspace-index-41,
+#group-workspaces #workspaces.custom button.workspace-index-42,
+#group-workspaces #workspaces.custom button.workspace-index-43,
+#group-workspaces #workspaces.custom button.workspace-index-44,
+#group-workspaces #workspaces.custom button.workspace-index-45,
+#group-workspaces #workspaces.custom button.workspace-index-46,
+#group-workspaces #workspaces.custom button.workspace-index-47,
+#group-workspaces #workspaces.custom button.workspace-index-48,
+#group-workspaces #workspaces.custom button.workspace-index-49,
+#group-workspaces #workspaces.custom button.workspace-index-50 {
     margin: 0;
+    margin-left: 0;
+    margin-right: 0;
     padding: 0;
+    padding-left: 0;
+    padding-right: 0;
+
     min-width: 0;
     font-size: 0;
     opacity: 0;
