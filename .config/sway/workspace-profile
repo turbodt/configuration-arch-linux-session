@@ -119,18 +119,42 @@ cycle_workspace() {
     profile="$(profile_for_num "$num")"
     first="$(profile_first_num "$profile")"
     last="$(profile_last_num "$profile")"
+    existing="$(swaymsg -t get_workspaces -r | jq -r --argjson first "$first" --argjson last "$last" '.[] | select(.num >= $first and .num <= $last) | [.num, .name] | @tsv' | sort -n)"
+    target_num=""
+    target_name=""
 
     case "$direction" in
         next)
-            target_num="$((num + 1))"
-            if [ "$target_num" -gt "$last" ]; then
-                target_num="$first"
+            while IFS="	" read -r existing_num existing_name; do
+                if [ "$existing_num" -gt "$num" ]; then
+                    target_num="$existing_num"
+                    target_name="$existing_name"
+                    break
+                fi
+            done <<EOF
+$existing
+EOF
+
+            if [ -z "$target_num" ]; then
+                IFS="	" read -r target_num target_name <<EOF
+$(printf '%s\n' "$existing" | head -n 1)
+EOF
             fi
             ;;
         prev)
-            target_num="$((num - 1))"
-            if [ "$target_num" -lt "$first" ]; then
-                target_num="$last"
+            while IFS="	" read -r existing_num existing_name; do
+                if [ "$existing_num" -lt "$num" ]; then
+                    target_num="$existing_num"
+                    target_name="$existing_name"
+                fi
+            done <<EOF
+$existing
+EOF
+
+            if [ -z "$target_num" ]; then
+                IFS="	" read -r target_num target_name <<EOF
+$(printf '%s\n' "$existing" | tail -n 1)
+EOF
             fi
             ;;
         *)
@@ -138,11 +162,14 @@ cycle_workspace() {
             ;;
     esac
 
-    target="$(workspace_name "$profile" "$target_num")"
+    [ -n "$target_num" ] || exit 0
+    [ -n "$target_name" ] || exit 0
+    [ "$target_num" -ne "$num" ] || exit 0
+
     if [ "$move_container" -eq 1 ]; then
-        swaymsg "move container to workspace \"$target\"; workspace \"$target\"" >/dev/null
+        swaymsg "move container to workspace \"$target_name\"; workspace \"$target_name\"" >/dev/null
     else
-        swaymsg "workspace \"$target\"" >/dev/null
+        swaymsg "workspace \"$target_name\"" >/dev/null
     fi
 }
 
