@@ -1,10 +1,46 @@
 #!/bin/sh
 
-current=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).name')
-[ -n "$current" ] || exit 0
+trim() {
+    result=$1
 
-new=$(printf '%s\n' "$current" | wofi --dmenu --prompt "Rename workspace")
-[ -n "$new" ] || exit 0
-[ "$new" = "$current" ] && exit 0
+    while [ -n "$result" ]; do
+        case $result in
+            [![:space:]]*) break ;;
+            *) result=${result#?} ;;
+        esac
+    done
 
-swaymsg rename workspace "$current" to "$new"
+    while [ -n "$result" ]; do
+        case $result in
+            *[![:space:]]) break ;;
+            *) result=${result%?} ;;
+        esac
+    done
+
+    printf '%s\n' "$result"
+}
+
+
+old_complete_name=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).name')
+[ -n "$old_complete_name" ] || exit 0
+
+num=$(swaymsg -t get_workspaces | jq -r '.[] | select(.focused).num')
+[ -n "$num" ] || exit 0
+
+old_name=""
+if [[ "$num" != "$old_complete_name" ]]; then
+    old_name="${old_complete_name#"$num":}"
+fi
+
+new_name=$(wofi --dmenu --prompt "Rename workspace")
+[ -n "$new_name" ] || exit 0
+
+new_name=$(trim "$new_name")
+[[ "$new_name" = "$old_name" ]] && exit 0
+
+new_complete_name="${num}"
+if [[ -n "$new_name" ]]; then
+    new_complete_name="${num}:${new_name}"
+fi
+
+swaymsg rename workspace number "$num" to "$new_complete_name"
